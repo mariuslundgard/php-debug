@@ -1,0 +1,34 @@
+{
+    "name": "mariuslundgard/php-debug",
+    "description": "PHP debug library.",
+    "keywords": ["php", "debug"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marius Lundgård",
+            "email": "studio@mariuslundgard.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "files": [
+            "src/common.php"
+        ],
+        "psr-0": {
+            "Debug": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4.13",
+        "mariuslundgard/php-util": "dev-develop"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mariuslundgard/php-util"
+        }
+    ]
+}
