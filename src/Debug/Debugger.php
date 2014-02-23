@@ -20,27 +20,11 @@ class Debugger
     {
         $this->name = $name;
         $this->config = $config + [
-            'output' => true,
-            'color' => 'cyan',
+            'output' => false,
+            'color'  => 'cyan',
+            'port'   => 1113,
         ];
     }
-
-    // protected static function randColor()
-    // {
-    //     $colors = [
-    //         'black',
-    //         'dark_gray',
-    //         'red',
-    //         'green',
-    //         'blue',
-    //         'purple',
-    //         'cyan',
-    //         'brown',
-    //         'yellow',
-    //     ];
-
-    //     return $colors[rand(0, count($colors) - 1)];
-    // }
 
     public function getCallback()
     {
@@ -58,9 +42,7 @@ class Debugger
     public static function getServer()
     {
         if (null === static::$server) {
-            $port = 1113;
-
-            static::$server = new SocketServer('udp://127.0.0.1:' . $port . '/debug', [
+            static::$server = new SocketServer('udp://127.0.0.1:' . $this->config['port'] . '/debug', [
                 'flags' => STREAM_SERVER_BIND,
             ]);
         }
@@ -71,14 +53,7 @@ class Debugger
     public function getClient()
     {
         if (null === $this->client) {
-            $port = 1113;
-
-            $this->client = new SocketClient('udp://127.0.0.1:' . $port . '/debug', [
-                // 'flags' => STREAM_SERVER_BIND,
-            ]);
-
-            // $client->send('http:testing this');
-            // $client->close();
+            $this->client = new SocketClient('udp://127.0.0.1:' . $this->config['port'] . '/debug');
         }
 
         return $this->client;
@@ -88,10 +63,12 @@ class Debugger
     {
         $output = '';
 
+        //
         foreach ($args as $item) {
             $output .= static::dump($item);
         }
 
+        //
         if ($this->config['output']) {
             echo '<pre>' . $output . '</pre>';
         }
