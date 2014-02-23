@@ -11,9 +11,7 @@
  */
 function debug()
 {
-    $debug = Debug\Debugger::get('debug');
-
-    call_user_func_array($debug, func_get_args());
+    call_user_func_array(Debug\Debugger::get('debug')->getCallback(), func_get_args());
 }
 
 function d()

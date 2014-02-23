@@ -1,21 +1,22 @@
 #!/usr/bin/php
 <?php
 
-// still in ALPHA :-)
+// because it's all still in ALPHA :-)
 error_reporting(E_ALL);
 
 // use composer for auto-loading
 require __DIR__.'/../vendor/autoload.php';
 
 // get process and debug server
-$process = Core\Process::get();
-$server = Debug\Debugger::getServer();
+// $process = Core\Process::get();
+$debugger = Debug\Debugger::get();
+$server = $debugger->getServer();
 
 // add process event handler
-$process->on('shutdown', function () use ($server) {
-    $server->send('shutdown server');
-    $server->close();
-});
+// $process->on('shutdown', function () use ($server) {
+//     $server->send('shutdown server');
+//     $server->close();
+// });
 
 // stats
 $lastTime = float_microtime();

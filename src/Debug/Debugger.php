@@ -10,10 +10,9 @@ class Debugger
     protected $name;
     protected $config;
     protected $callback;
-
-    protected static $server;
     protected $client;
 
+    protected static $servers;
     protected static $debuggers;
 
     public function __construct($name, array $config = [])
@@ -39,28 +38,31 @@ class Debugger
         return $this->callback;
     }
 
-    public static function getServer()
+    public function getServer()
     {
-        if (null === static::$server) {
-            static::$server = new SocketServer('udp://127.0.0.1:' . $this->config['port'] . '/debug', [
+        if (empty(static::$servers[$this->name])) {
+        // if (null === static::$server) {
+            static::$servers[$this->name] = new SocketServer('udp://127.0.0.1:' . $this->config['port'] . '/' . $this->name, [
                 'flags' => STREAM_SERVER_BIND,
             ]);
         }
 
-        return static::$server;
+        return static::$servers[$this->name];
     }
 
     public function getClient()
     {
         if (null === $this->client) {
-            $this->client = new SocketClient('udp://127.0.0.1:' . $this->config['port'] . '/debug');
+            $this->client = new SocketClient('udp://127.0.0.1:' . $this->config['port'] . '/' . $this->name);
         }
 
         return $this->client;
     }
 
-    protected function _handleCall($args)
+    public function debug()
     {
+        $args = func_get_args();
+
         $output = '';
 
         //
@@ -78,13 +80,19 @@ class Debugger
         $this->getClient()->close();
     }
 
+    protected function _handleCall($args)
+    {
+        call_user_func_array([$this, 'debug'], $args);
+        // $this->debug();
+    }
+
     public static function get($name = 'default', array $config = [])
     {
         if (empty(static::$debuggers[$name])) {
             static::$debuggers[$name] = new static($name, $config);
         }
 
-        return static::$debuggers[$name]->getCallback();
+        return static::$debuggers[$name];
     }
 
     public static function dump($obj, $func = 'json_encode')
