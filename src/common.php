@@ -266,6 +266,8 @@ function inspect_html($name, $obj, $maxDepth = 30)
 // function for debugging data structures
 function d()
 {
+    debug(func_get_args());
+
     $buf = '<div style="font-weight: bold; position: relative; z-index: 1; font-family: \'Menlo\', monospace; font-size: 13px; line-height: 18px; padding: 10px 0; background: rgba(240, 240, 240, .9);">';
 
     foreach (func_get_args() as $arg) {
