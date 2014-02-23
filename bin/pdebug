@@ -37,7 +37,7 @@ do {
         $message = implode(':', $packet);
 
         // indent
-        echo '  ';
+        // echo '  ';
 
         // debug domain
         echo str_cli_color($domain, $color);
