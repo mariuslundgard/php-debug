@@ -15,7 +15,8 @@
             "src/common.php"
         ],
         "psr-0": {
-            "Debug": "src/"
+            "Debug": "src/",
+            "Core": "src/"
         }
     },
     "require": {
