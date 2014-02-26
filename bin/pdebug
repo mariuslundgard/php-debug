@@ -29,7 +29,7 @@ do {
     if ($packet = $server->receive()) {
 
         // calculate duration since last debug message
-        $msDuration = number_format(float_microtime() - $lastTime, 3);
+        $msDuration = number_format(float_microtime() - $lastTime, 6);
 
         $packet = explode(':', $packet);
         $domain = array_shift($packet);

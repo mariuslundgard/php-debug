@@ -1,9 +1,10 @@
+<?php putenv('DEBUG=1'); require __DIR__.'/../vendor/autoload.php'; ?>
+
+<h1>Examples</h1>
+
+<img src="terminal.png">
+
 <?php
-
-require __DIR__.'/../vendor/autoload.php';
-
-echo '<h1>Examples</h1>';
-
 // d($_SERVER);
 
 d('A');
@@ -12,3 +13,4 @@ dd('B');
 
 d('C');
 
+?>

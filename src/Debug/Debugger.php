@@ -70,8 +70,9 @@ class Debugger
             $output .= static::dump($item);
         }
 
-        //
-        if ($this->config['output']) {
+        // determine whether or not to output (to the browser or console)
+        // TODO: format differently for console
+        if ($this->config['output'] || (($env = getenv('DEBUG')) && (!$env || $env !== 'false'))) {
             echo '<pre>' . $output . '</pre>';
         }
 
