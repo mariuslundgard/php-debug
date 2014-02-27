@@ -21,6 +21,7 @@ $server = $debugger->getServer();
 // stats
 $lastTime = float_microtime();
 $num = 1;
+$contextTimeOut = 3;
 
 // ui message
 echo 'Listening for debug messages...' . PHP_EOL;
@@ -30,6 +31,10 @@ do {
 
         // calculate duration since last debug message
         $msDuration = number_format(float_microtime() - $lastTime, 6);
+
+        if ($contextTimeOut < $msDuration) {
+            echo str_cli_color('----------------', 'white') . PHP_EOL;
+        }
 
         $packet = explode(':', $packet);
         $domain = array_shift($packet);
