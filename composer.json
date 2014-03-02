@@ -10,6 +10,7 @@
             "email": "studio@mariuslundgard.com"
         }
     ],
+    "bin": ["bin/pdebug"],
     "minimum-stability": "dev",
     "autoload": {
         "files": [
