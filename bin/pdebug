@@ -5,18 +5,18 @@
 error_reporting(E_ALL);
 
 // use composer for auto-loading
-require __DIR__.'/../vendor/autoload.php';
+if (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    require_once __DIR__.'/../vendor/autoload.php';
+} elseif (file_exists(__DIR__.'/../../../vendor/autoload.php')) {
+    require_once __DIR__.'/../../../vendor/autoload.php';
+} else {
+    die('Could not locate the vendor autoloader');
+}
 
 // get process and debug server
 // $process = Core\Process::get();
 $debugger = Debug\Debugger::get();
 $server = $debugger->getServer();
-
-// add process event handler
-// $process->on('shutdown', function () use ($server) {
-//     $server->send('shutdown server');
-//     $server->close();
-// });
 
 // stats
 $lastTime = float_microtime();
@@ -41,9 +41,6 @@ do {
         $color = array_shift($packet);
         $message = implode(':', $packet);
 
-        // indent
-        // echo '  ';
-
         // debug domain
         echo str_cli_color($domain, $color);
         echo ' ';
@@ -54,9 +51,6 @@ do {
 
         // message
         echo str_cli_color($message, 'light_gray');
-        echo ' ';
-        echo '';
-
         echo PHP_EOL;
 
         // store last time
