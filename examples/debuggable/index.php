@@ -1,6 +1,6 @@
 <?php
 
-// putenv('DEBUG=1');
+putenv('DEBUG=1');
 
 require_once __DIR__.'/../../vendor/autoload.php';
 
@@ -9,7 +9,12 @@ use Event\Emitter;
 
 class DebuggableExample extends Emitter
 {
-    use DebuggableTrait;    
+    use DebuggableTrait;
+
+    public function __construct()
+    {
+        parent::__construct($this);
+    }
 }
 
 $obj = new DebuggableExample;

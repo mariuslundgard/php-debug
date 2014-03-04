@@ -61,22 +61,28 @@ class Debugger
 
     public function debug()
     {
+        // get the arguments to be debugged
         $args = func_get_args();
 
+        // prepare debug output
         $output = '';
-
-        //
         foreach ($args as $item) {
             $output .= static::dump($item);
         }
 
-        // determine whether or not to output (to the browser or console)
-        // TODO: format differently for console
+        // client-side output?
         if ($this->config['output'] || (($env = getenv('DEBUG')) && (!$env || $env !== 'false'))) {
-            echo '<pre>' . $output . '</pre>';
+            $cssColor = [
+                'cyan' => '#09f',
+                'red' => '#f00',
+                'green' => '#0c0',
+            ];
+            $color = isset($cssColor[$this->config['color']]) ? $cssColor[$this->config['color']] : '#ccc';
+            $prefix = '<span style="color: ' . $color . '">' . $this->name . '</span> ';
+            echo '<pre>' . $prefix . $output . '</pre>';
         }
 
-        //
+        // send debug message to server
         $this->getClient()->send($this->name . ':' . $this->config['color'] . ':' . $output);
         $this->getClient()->close();
     }
@@ -84,7 +90,6 @@ class Debugger
     protected function _handleCall($args)
     {
         call_user_func_array([$this, 'debug'], $args);
-        // $this->debug();
     }
 
     public static function get($name = 'default', array $config = [])
