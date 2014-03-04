@@ -46,8 +46,8 @@ do {
         echo ' ';
 
         // duration
-        echo str_cli_color('+' . $msDuration . 's', $color);
-        echo ' ';
+        // echo str_cli_color('+' . $msDuration . 's', $color);
+        // echo ' ';
 
         // message
         echo str_cli_color($message, 'light_gray');
