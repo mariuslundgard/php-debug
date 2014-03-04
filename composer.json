@@ -24,6 +24,7 @@
         "php": ">=5.4.13",
         "mariuslundgard/php-util": "dev-develop",
         "mariuslundgard/php-core": "dev-develop",
+        "mariuslundgard/php-event": "dev-develop",
         "mariuslundgard/php-socket": "dev-develop"
     },
     "require-dev": {
@@ -37,6 +38,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/mariuslundgard/php-core"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/mariuslundgard/php-event"
         },
         {
             "type": "vcs",

@@ -1,4 +1,10 @@
-<?php putenv('DEBUG=1'); require __DIR__.'/../vendor/autoload.php'; ?>
+<?php
+
+putenv('DEBUG=1');
+
+require_once __DIR__.'/../../vendor/autoload.php';
+
+?>
 
 <h1>Examples</h1>
 
