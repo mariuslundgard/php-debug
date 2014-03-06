@@ -79,7 +79,7 @@ class Debugger
             ];
             $color = isset($cssColor[$this->config['color']]) ? $cssColor[$this->config['color']] : '#ccc';
             $prefix = '<span style="color: ' . $color . '">' . $this->name . '</span> ';
-            echo '<pre>' . $prefix . $output . '</pre>';
+            echo '<pre style="background: #f6f6f6; font-family: Menlo, monospace; font-size: 13px; line-height: 1.333; padding: 5px 10px; margin: 0">' . $prefix . $output . '</pre>';
         }
 
         // send debug message to server
