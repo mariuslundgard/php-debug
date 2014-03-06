@@ -19,9 +19,12 @@ class Debugger
     {
         $this->name = $name;
         $this->config = $config + [
-            'output' => false,
-            'color'  => 'cyan',
-            'port'   => 1113,
+            'protocol' => 'udp',
+            'host'     => '127.0.0.1',
+            'port'     => 1113,
+            'path'     => '/debug',
+            'output'   => false,
+            'color'    => 'cyan',
         ];
     }
 
@@ -41,8 +44,11 @@ class Debugger
     public function getServer()
     {
         if (empty(static::$servers[$this->name])) {
-        // if (null === static::$server) {
-            static::$servers[$this->name] = new SocketServer('udp://127.0.0.1:' . $this->config['port'] . '/' . $this->name, [
+            // build address
+            $address = $this->config['protocol'] . '://' . $this->config['host'] . ':' . $this->config['port'] . $this->config['path'];
+
+            // testing
+            static::$servers[$this->name] = new SocketServer($address, [
                 'flags' => STREAM_SERVER_BIND,
             ]);
         }
@@ -92,7 +98,7 @@ class Debugger
         call_user_func_array([$this, 'debug'], $args);
     }
 
-    public static function get($name = 'default', array $config = [])
+    public static function get($name = 'debug', array $config = [])
     {
         if (empty(static::$debuggers[$name])) {
             static::$debuggers[$name] = new static($name, $config);
@@ -128,18 +134,6 @@ class Debugger
 
         return $str ? (string) $str : '(empty)';
     }
-
-
-
-// function inspect()
-// {
-
-// }
-
-// function debug()
-// {
-//     call_user_func_array(Debug\Debugger::get(), func_get_args());
-// }
 
 // function inspect($obj, $depth = null, $mem = [])
 // {
