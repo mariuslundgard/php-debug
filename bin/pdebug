@@ -1,0 +1,60 @@
+#!/usr/bin/php
+<?php
+
+// because we're still in BETA!
+error_reporting(E_ALL);
+
+// use composer for auto-loading
+if (file_exists(__DIR__.'/../vendor/autoload.php')) {
+    require_once __DIR__.'/../vendor/autoload.php';
+} elseif (file_exists(__DIR__.'/../../../autoload.php')) {
+    require_once __DIR__.'/../../../autoload.php';
+} else {
+    die('Could not locate the vendor autoloader');
+}
+
+// get process and debug server
+$debugger = Debug\Debugger::get();
+$server = $debugger->getServer();
+
+// stats
+$lastTime = float_microtime();
+$num = 1;
+$contextTimeOut = 3;
+
+// ui message
+echo 'Listening for debug messages...' . PHP_EOL;
+
+do {
+    if ($packet = $server->receive()) {
+
+        // calculate duration since last debug message
+        $msDuration = number_format(float_microtime() - $lastTime, 6);
+
+        if ($contextTimeOut < $msDuration) {
+            echo str_cli_color('----------------', 'white') . PHP_EOL;
+        }
+
+        $packet = explode(':', $packet);
+        $domain = array_shift($packet);
+        $color = array_shift($packet);
+        $message = implode(':', $packet);
+
+        // debug domain
+        echo str_cli_color($domain, $color);
+        echo ' ';
+
+        // duration
+        // echo str_cli_color('+' . $msDuration . 's', $color);
+        // echo ' ';
+
+        // message
+        echo str_cli_color($message, 'light_gray');
+        echo PHP_EOL;
+
+        // store last time
+        $lastTime = float_microtime();
+    }
+}
+
+while ($packet);
