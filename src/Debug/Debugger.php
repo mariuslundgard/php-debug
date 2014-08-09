@@ -34,7 +34,7 @@ class Debugger
             $debugger = $this;
 
             $this->callback = function () use ($debugger) {
-                $debugger->_handleCall(func_get_args());
+                $debugger->handleCall(func_get_args());
             };
         }
 
@@ -85,7 +85,8 @@ class Debugger
             ];
             $color = isset($cssColor[$this->config['color']]) ? $cssColor[$this->config['color']] : '#ccc';
             $prefix = '<span style="color: ' . $color . '">' . $this->name . '</span> ';
-            echo '<pre style="background: #f6f6f6; font-family: Menlo, monospace; font-size: 13px; line-height: 1.333; padding: 5px 10px; margin: 0">' . $prefix . $output . '</pre>';
+            echo '<pre style="background: #f6f6f6; font-family: Menlo, monospace; font-size: 13px; line-height: 1.333; '
+                .'padding: 5px 10px; margin: 0">' . $prefix . $output . '</pre>';
         }
 
         // send debug message to server
@@ -93,7 +94,7 @@ class Debugger
         $this->getClient()->close();
     }
 
-    protected function _handleCall($args)
+    protected function handleCall($args)
     {
         call_user_func_array([$this, 'debug'], $args);
     }
@@ -256,7 +257,7 @@ class Debugger
 //     $buf = [];
 
 //     switch ($info['type']) {
-        
+
 //         case 'object':
 //             $buf[] = '<details style="padding: 0 13px;">';
 //             $buf[] = '<summary style="outline: none; cursor: pointer;">';
@@ -301,7 +302,7 @@ class Debugger
 
 //             $buf[] = '</details>';
 //             break;
-        
+
 //         case 'array':
 //             $buf[] = '<details style="padding: 0 13px;">';
 //             $buf[] = '<summary style="outline: none; cursor: pointer;">';
@@ -320,32 +321,37 @@ class Debugger
 
 //             $buf[] = '</details>';
 //             break;
-        
+
 //         case 'string':
 //             $buf[] = '<div style="padding: 0 13px 0 26px;">';
 //             $buf[] = '<span class="type" style="color: #999;">' . $info['type'] . '</span>';
-//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') . ' <span class="string" style="color: #f00;">\'' . htmlspecialchars($info['data']) . '\'</span>';
+//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') .
+//                 ' <span class="string" style="color: #f00;">\'' . htmlspecialchars($info['data']) . '\'</span>';
 //             $buf[] = '</div>';
 //             break;
 
 //         case 'int':
 //             $buf[] = '<div style="padding: 0 13px 0 26px;">';
 //             $buf[] = '<span class="type" style="color: #999;">' . $info['type'] . '</span>';
-//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') . ' <span class="string" style="color: #00f;">' . $info['data'] . '</span>';
+//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') .
+//                 ' <span class="string" style="color: #00f;">' . $info['data'] . '</span>';
 //             $buf[] = '</div>';
 //             break;
 
 //         case 'boolean':
 //             $buf[] = '<div style="padding: 0 13px 0 26px;">';
 //             // $buf[] = '<span class="type" style="color: #999;">' . $info['type'] . '</span>';
-//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') . ' <span class="string" style="color: ' . ($info['data'] === 'TRUE' ? '#0c0' : '#c00' ) . ';">' . $info['data'] . '</span>';
+//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') .
+//                 ' <span class="string" style="color: ' . ($info['data'] === 'TRUE' ? '#0c0' : '#c00' ).
+//                 ';">' . $info['data'] . '</span>';
 //             $buf[] = '</div>';
 //             break;
 
 //         case 'null':
 //             $buf[] = '<div style="padding: 0 13px 0 26px;">';
 //             // $buf[] = '<span class="type" style="color: #999;">' . $info['type'] . '</span>';
-//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '') . ' <span class="string" style="color: #ccc;">NULL</span>';
+//             $buf[] = '' . ($varName !== null ? ' '.$varName . '' : '').
+//                 ' <span class="string" style="color: #ccc;">NULL</span>';
 //             $buf[] = '</div>';
 //             break;
 
@@ -369,14 +375,17 @@ class Debugger
 // {
 //     // debug(func_get_args());
 
-//     $buf = '<div style="font-weight: bold; position: relative; z-index: 1; font-family: \'Menlo\', monospace; font-size: 13px; line-height: 18px; padding: 10px 0; background: rgba(240, 240, 240, .9);">';
+//     $buf = '<div style="font-weight: bold; position: relative; z-index: 1; font-family: \'Menlo\', '.
+//         'monospace; font-size: 13px; line-height: 18px; padding: 10px 0; background: rgba(240, 240, 240, .9);">';
 
 //     foreach (func_get_args() as $arg) {
 //         // echo '+';
 //         $buf .= inspect_html(null, $arg);
 //     }
 
-//     $buf .= '<a href="#" style="color: #eee; text-decoration: none; position: absolute; right: 8px; top: 8px; width: 18px; text-align: center; padding: 2px; background: #ccc; font-size: 15px; border-radius: 14px;" onclick="javascript:this.parentNode.parentNode.removeChild(this.parentNode);return false;">&times</a></div>';
+//     $buf .= '<a href="#" style="color: #eee; text-decoration: none; position: absolute; right: 8px; top: 8px; '.
+//         'width: 18px; text-align: center; padding: 2px; background: #ccc; font-size: 15px; border-radius: 14px;" '.
+//         'onclick="javascript:this.parentNode.parentNode.removeChild(this.parentNode);return false;">&times</a></div>';
 
 //     echo $buf;
 // }

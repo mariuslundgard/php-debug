@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-// because it's all still in ALPHA :-)
+// because we're still in BETA!
 error_reporting(E_ALL);
 
 // use composer for auto-loading
@@ -14,7 +14,6 @@ if (file_exists(__DIR__.'/../vendor/autoload.php')) {
 }
 
 // get process and debug server
-// $process = Core\Process::get();
 $debugger = Debug\Debugger::get();
 $server = $debugger->getServer();
 

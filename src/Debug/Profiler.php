@@ -6,6 +6,6 @@ class Profiler
 {
     public function __construct()
     {
-        // asdasdasd
+
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "mariuslundgard/php-debug",
-    "description": "PHP debug library.",
+    "description": "A debug library for PHP 5.4+.",
     "keywords": ["php", "debug"],
     "type": "library",
     "license": "MIT",
@@ -10,7 +10,9 @@
             "email": "studio@mariuslundgard.com"
         }
     ],
-    "bin": ["bin/pdebug"],
+    "bin": [
+        "bin/pdebug"
+    ],
     "minimum-stability": "dev",
     "autoload": {
         "files": [
@@ -28,17 +30,21 @@
         "mariuslundgard/php-socket": "dev-develop"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.0.*"
+        "phpunit/phpunit": "~4.0",
+        "phploc/phploc": "*",
+        "mayflower/php-codebrowser": "~1.1",
+        "phpunit/php-invoker": "dev-master",
+        "pdepend/pdepend": "~2.0",
+        "phpmd/phpmd": "dev-master",
+        "sebastian/phpcpd": "~1.4",
+        "sebastian/finder-facade": "dev-master",
+        "theseer/fdomdocument": "dev-master",
+        "squizlabs/php_codesniffer": "~1.4",
+        "nette/nette": "~2.1.3",
+        "apigen/apigen": "~2.8",
+        "satooshi/php-coveralls": "dev-master"
     },
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/mariuslundgard/php-util"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/mariuslundgard/php-core"
-        },
         {
             "type": "vcs",
             "url": "https://github.com/mariuslundgard/php-event"
@@ -46,6 +52,25 @@
         {
             "type": "vcs",
             "url": "https://github.com/mariuslundgard/php-socket"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "sebastianbergmann/phpcov",
+                "version": "1.1.0",
+                "dist": {
+                    "url": "https://github.com/sebastianbergmann/phpcov/archive/1.1.0.zip",
+                    "type": "zip"
+                },
+                "source": {
+                    "url": "https://github.com/sebastianbergmann/phpcov.git",
+                    "type": "git",
+                    "reference": "1.1.0"
+                },
+                "bin": [
+                    "phpcov.php"
+                ]
+            }
         }
     ]
 }
