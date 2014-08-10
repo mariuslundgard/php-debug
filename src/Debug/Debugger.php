@@ -80,27 +80,44 @@ class Debugger
         // client-side output?
         if ($this->config['output'] || (($env = getenv('DEBUG')) && (!$env || $env !== 'false'))) {
             $colors = [
-                'cyan' => '#09f',
+                'cyan' => '#0ec',
                 'red' => '#f00',
                 'green' => '#0c0',
             ];
             $color = isset($colors[$this->config['color']]) ? $colors[$this->config['color']] : '#ccc';
             $prefix = '<span style="color: '.$color.'">'.$this->name.'</span> ';
 
-            echo '<pre style="'.
-                'background: #f6f6f6; '.
-                'font-family: Menlo, monospace; '.
-                'font-size: 14px; '.
-                'line-height: 20px; '.
-                'padding: 7px 10px; '.
+            echo '<details style="'.
+                'background: rgba(127, 127, 127, .1);'.
+                'font-family: Menlo, monospace;'.
+                'font-size: 14px;'.
+                'line-height: 20px;'.
                 'margin: 1px 0;'.
-                '">'.
-                $prefix.$output.
-                '</pre>';
+                '" open>'.
+                '<summary style="padding: 7px 10px; outline: none; cursor: default; display: inline;">'.
+                $prefix.
+                '</summary><pre style="padding: 0 10px 7px; font-family: inherit; line-height: inherit; margin: 0; display: inline;">'.
+                $output.
+                '</pre></details>';
+        }
+
+        $this->sendToSocketServer($output);
+    }
+
+    protected function sendToSocketServer($output, $num = 1, $parts = 1)
+    {
+        // split the output in to smaller packets
+        if (1000 < strlen($output)) {
+            $chunks = explode('{||}', chunk_split($output, 1000, '{||}'));
+            array_pop($chunks);
+            for ($i = 0; $i < count($chunks); $i++) {
+                $this->sendToSocketServer($chunks[$i], $i+1, count($chunks));
+            }
+            return;
         }
 
         // send debug message to server
-        $this->getClient()->send($this->name.':'.$this->config['color'].':'.$output);
+        $this->getClient()->send($this->name.':'.$this->config['color'].':'.$num.'of'.$parts.':'.$output);
         $this->getClient()->close();
     }
 
