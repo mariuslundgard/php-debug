@@ -8,8 +8,25 @@ class DebuggerTest extends Base
 {
     public function testCreate()
     {
-        // $group = new Debugger();
+        // $debugger = new Debugger('test');
+        $debugger = Debugger::get('test');
 
-        // $this->assertInstanceOf('Debug\Debugger', $group);
+        $this->assertInstanceOf('Debug\Debugger', $debugger);
+    }
+
+    public function testGetServer()
+    {
+        // $debugger = new Debugger('test');
+        $debugger = Debugger::get('test');
+
+        $this->assertInstanceOf('Socket\Server', $debugger->getServer());
+    }
+
+    public function testGetClient()
+    {
+        // $debugger = new Debugger('test');
+        $debugger = Debugger::get('test');
+
+        $this->assertInstanceOf('Socket\Client', $debugger->getClient());
     }
 }

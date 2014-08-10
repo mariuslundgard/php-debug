@@ -1,4 +1,4 @@
 <?php
 
 $loader = require realpath(__DIR__ . '/../vendor/autoload.php');
-$loader->add('Core', __DIR__);
+// $loader->add('Debug', __DIR__);

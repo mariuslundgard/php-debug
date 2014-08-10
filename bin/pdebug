@@ -32,7 +32,11 @@ do {
         $msDuration = number_format(float_microtime() - $lastTime, 6);
 
         if ($contextTimeOut < $msDuration) {
-            echo str_cli_color('----------------', 'white') . PHP_EOL;
+            echo str_cli_color(
+                '--------------------------------------------------------------------------------',
+                'light_grey'
+            );
+            echo PHP_EOL;
         }
 
         $packet = explode(':', $packet);
@@ -45,11 +49,11 @@ do {
         echo ' ';
 
         // duration
-        // echo str_cli_color('+' . $msDuration . 's', $color);
-        // echo ' ';
+        echo str_cli_color('+' . $msDuration . 's', 'light_grey');
+        echo ' ';
 
         // message
-        echo str_cli_color($message, 'light_gray');
+        echo $message;
         echo PHP_EOL;
 
         // store last time

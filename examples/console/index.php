@@ -19,4 +19,8 @@ dd('B');
 
 d('C');
 
+d($_SERVER);
+
+d(new Debug\Debugger('foo'));
+
 ?>
