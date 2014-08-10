@@ -22,3 +22,30 @@ $obj->d('testing 1', 'testing 2');
 $obj->d($_SERVER);
 
 $obj->d($obj);
+
+$obj->d(
+    'A REALLY LONG DEBUG MESSAGE: '
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+    .print_r($_SERVER, 1)
+);
+
+d("YEPPP!!!");
+d("YEPPP!!!");
